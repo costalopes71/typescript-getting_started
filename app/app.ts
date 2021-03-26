@@ -1,6 +1,6 @@
 function startGame() {
     
-    const playerName = 'Joao';
+    let playerName = 'Joao';
     logPlayer(playerName);
     
     // starting a new game
