@@ -1,5 +1,5 @@
 let squareIt = (x: number) => x * x;
-let result = squareIt(4);
+let powResult = squareIt(4);
 
 console.log(result);
 
