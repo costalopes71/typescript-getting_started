@@ -1,67 +1,22 @@
 /// <reference path="player.ts" />
+/// <reference path="game.ts" />
 
+let newGame: Game;
 
-function startGame() {
-    
-    let playerName: string | undefined = getInputValue('playername');
-    postScore(80, playerName);
-    postScore(-5, playerName);
-    logPlayer(playerName);
-    
-}
+// add click handlers to the start game button
+document.getElementById('startGame')!.addEventListener('click', () => {
+    const player = new Player();
+    player.name = Utility.getInputValue('playername');
 
-function logPlayer(name: string = 'MultiMath Player') : void {
-    console.log(`New game starting for player: ${name}`);
-}
+    const problemCount: number = Number(Utility.getInputValue('problemCount'));
+    const factor: number = Number(Utility.getInputValue('factor'));
 
-function getInputValue(elementId: string) : string | undefined {
+    newGame = new Game(player, problemCount, factor);
+    newGame.displayGame();
+});
 
-    const inputElement = <HTMLInputElement>document.getElementById(elementId);
+// add click handler to the calculate score button
+document.getElementById('calculate')!.addEventListener('click', () => {
+    newGame.calculateScore();
+});
 
-    if (inputElement.value === '') {
-        return undefined;
-    } else {
-        return inputElement.value;
-    }
-
-}
-
-function postScore(score: number, player: string = 'MultiMath Player') : void {
-    
-    let logger: (value: string) => void;
-
-    if (score < 0) {
-        logger = logError;
-    } else {
-        logger = logMessage;
-    }
-    
-    const scoreElement: HTMLElement | null = document.getElementById('postedScores');
-    scoreElement!.innerText = `${score} - ${player}`;
-
-    logger(`Score: ${score}`);
-}
-
-document.getElementById('startGame')!.addEventListener('click', startGame);
-
-const logMessage = (message: string) => console.log(message);
-
-function logError(err: string): void {
-    console.error(err);
-}
-
-// let myResult: Result = {
-//     playerName: 'Marie',
-//     score: 5,
-//     problemCount: 5,
-//     factor: 7
-// }
-
-// let player: Person = {
-//     name: "Daniel",
-//     formatName: () => "Dan"
-// }
-
-let firstPlayer: Player = new Player();
-firstPlayer.name = 'Lanier';
-console.log(firstPlayer.formatName());
